@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+  postgres:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_USER: 'app'
+      POSTGRES_DB: 'app'
+  client-ui:
+    image: muravevartem/samokatim-client-ui:latest
+    ports:
+      - '80:80'
+      - '443:443'
+  gateway:
+    image: muravevartem/samokatim-gateway:latest
+    ports:
+      - '8080:8080'
+  monitoring-service:
+    image: muravevartem/samokatim-monitoring-service:latest
