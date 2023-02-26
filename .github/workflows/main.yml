@@ -21,7 +21,7 @@ jobs:
           chmod 400 ~/.ssh/id_rsa
       - name: Load files to server
         run: |
-          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -A * ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }}:/app
+          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -A * ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }}:/
       - name: Deploy to server
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -A ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} 'cd /app; docker-compose up -d'
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -A ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} 'cd /; docker-compose up -d'
