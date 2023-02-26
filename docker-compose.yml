@@ -27,3 +27,5 @@ services:
       - '8080:8080'
   monitoring-service:
     image: muravevartem/samokatim-monitoring-service:latest
+  handbook-service:
+    image: muravevartem/samokatim-handbook-service:latest
