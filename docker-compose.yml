@@ -23,8 +23,6 @@ services:
       - ./sql:/docker-entrypoint-initdb.d/:ro
     env_file:
       - ./database.dev.env
-    networks:
-      - backend
     ports:
       - "5432:5433"
   keycloak:
