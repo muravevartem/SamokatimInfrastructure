@@ -16,6 +16,26 @@ services:
       POSTGRES_PASSWORD: 123456
       POSTGRES_USER: 'app'
       POSTGRES_DB: 'app'
+  keycloak-postgres:
+    image: "postgres:13.2"
+    volumes:
+      - ./db-data:/var/lib/postgresql/data/
+      - ./sql:/docker-entrypoint-initdb.d/:ro
+    env_file:
+      - ./database.dev.env
+    networks:
+      - backend
+    ports:
+      - "5432:5433"
+  keycloak:
+    image: "jboss/keycloak:15.0.2"
+    depends_on:
+      - "keycloak-postgres"
+    env_file:
+      - ./keycloak.dev.env
+    ports:
+      - "8180:8180"
+      - "8787:8787"
   client-ui:
     image: muravevartem/samokatim-client-ui:latest
     ports:
