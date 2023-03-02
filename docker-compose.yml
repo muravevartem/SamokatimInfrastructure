@@ -1,4 +1,12 @@
 version: '3.3'
+
+volumes:
+  postgres_data_kc:
+    driver: local
+  postgres_data:
+    driver: local
+
+
 services:
   mongo:
     image: mongo
@@ -10,6 +18,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
   postgres:
     image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - '5432:5432'
     environment:
@@ -19,7 +29,9 @@ services:
   keycloak-postgres:
     image: postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_kc:/var/lib/postgresql-kc/data
+    ports:
+      - "5433:5432"
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
@@ -35,8 +47,6 @@ services:
       DB_PASSWORD: pwd
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: change_me
-      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
-      #JDBC_PARAMS: "ssl=true"
     ports:
       - "8180:8080"
     depends_on:
